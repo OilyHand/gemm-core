@@ -10,9 +10,7 @@ Description:
 # 1&ensp;VTA Hardware Overview
 
 <center>
-
-![VTA Hardware](imgs/vta_overview.png){: width="70%"}
-
+  <img src="imgs/vta_overview.png" width="600">
 </center>
 
 ## 1.1&ensp;Modules
@@ -60,10 +58,8 @@ Description:
 ### GEMM Instruction
 
 <center>
-
-![gemm instruction](imgs/gemm_inst_0.png){: width="90%"}
-![gemm instruction](imgs/gemm_inst_1.png){: width="90%"}
-
+  <img src="imgs/gemm_inst_0.png" width="700">
+  <img src="imgs/gemm_inst_1.png" width="700">
 </center>
 
 <br>
@@ -161,20 +157,17 @@ Description:
 
 <br>
 
-![gemm_inst_for_zed](imgs/gemm_inst_zed.png)
+<center>
+  <img src="imgs/gemm_inst_zed.png" width="700">
+</center>
 
 <br>
 
 ## 2.2&ensp;GEMM Core Operations
 
-
 <center>
-
-![gemm](imgs/GEMM_core_perform.png){: width="90%"}
-
+  <img src="imgs/GEMM_core_perform.png" width="750">
 </center>
-
-
 
 <!-------------------- end of section 2 --------------------->
 
@@ -187,8 +180,6 @@ Description:
 ---
 
 # 3&ensp;GEMM Core with HLS codes
-
-
 
 ## 3.1&ensp;compute
 
@@ -411,12 +402,9 @@ void gemm(
 - instruction and micro-code
 
 <center>
-
-![gemm instruction](imgs/gemm_inst_0.png){: width="80%"}
-![gemm instruction](imgs/gemm_inst_1.png){: width="80%"}
-
-![](imgs/gemm_microop.png)
-
+  <img src="imgs/gemm_inst_0.png" width="700">
+  <img src="imgs/gemm_inst_1.png" width="700">
+  <img src="imgs/gemm_microop.png" width="450">
 </center>
 
 #### outer loop
@@ -497,4 +485,81 @@ void gemm(
 
 <br>
 
+<!--
+References
+  [1] https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html
+
+  [2] https://tvm.apache.org/docs/topic/vta/dev/hardware.html
+-->
+
+
 <!---------------------- end of file ------------------------>
+
+VTA_TARGET=pynq
+VTA_HW_VER=0.0.2
+VTA_LOG_INP_WIDTH=3
+VTA_LOG_WGT_WIDTH=3
+VTA_LOG_ACC_WIDTH=5
+VTA_LOG_BATCH=0
+VTA_LOG_BLOCK=4
+VTA_LOG_UOP_BUFF_SIZE=15
+VTA_LOG_INP_BUFF_SIZE=15
+VTA_LOG_WGT_BUFF_SIZE=18
+VTA_LOG_ACC_BUFF_SIZE=17
+VTA_LOG_BLOCK_IN=4
+VTA_LOG_BLOCK_OUT=4
+VTA_LOG_OUT_WIDTH=3
+VTA_LOG_OUT_BUFF_SIZE=15
+VTA_LOG_BUS_WIDTH=6
+VTA_IP_REG_MAP_RANGE=0x1000
+VTA_FETCH_ADDR=0x43C00000
+VTA_LOAD_ADDR=0x43C01000
+VTA_COMPUTE_ADDR=0x43C02000
+VTA_STORE_ADDR=0x43C03000
+VTA_FETCH_INSN_COUNT_OFFSET=16
+VTA_FETCH_INSN_ADDR_OFFSET=24
+VTA_LOAD_INP_ADDR_OFFSET=16
+VTA_LOAD_WGT_ADDR_OFFSET=24
+VTA_COMPUTE_DONE_WR_OFFSET=16
+VTA_COMPUTE_DONE_RD_OFFSET=24
+VTA_COMPUTE_UOP_ADDR_OFFSET=32
+VTA_COMPUTE_BIAS_ADDR_OFFSET=40
+VTA_STORE_OUT_ADDR_OFFSET=16
+VTA_COHERENT_ACCESSES=true
+
+
+-------------------------------------------
+
+
+VTA_LOG_INP_WIDTH=3
+VTA_INP_WIDTH=8
+
+VTA_LOG_WGT_WIDTH=3
+VTA_WGT_WIDTH=8
+
+VTA_LOG_ACC_WIDTH=5
+VTA_ACC_WIDTH=5
+
+VTA_LOG_OUT_WIDTH=3
+VTA_OUT_WIDTH=8
+
+VTA_LOG_BATCH=0
+VTA_BATCH=1
+
+VTA_LOG_BLOCK_IN=4
+VTA_BLOCK_IN=16
+VTA_LOG_BLOCK_OUT=4
+VTA_BLOCK_OUT=16
+
+input tile  : 8  bits
+weight tile : 8  bits
+accum tile  : 32 bits
+output tile : 8  bits
+
+input tensor  : 1 * 16  = 16  tiles 
+weight tensor : 16 * 16 = 256 tiles
+accum tensor  : 1 * 16  = 16  tiles
+output tensor : 1 * 16  = 16  tiles
+
+constraints
+- matrix multiplication operation : complete in single clock  
